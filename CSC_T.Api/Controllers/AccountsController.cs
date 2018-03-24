@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CSC_T.Api.Helpers;
 using CSC_T.Api.Models;
 using CSC_T.BusinessLayer;
 using CSC_T.BusinessLayer.Entities;
@@ -34,10 +35,9 @@ namespace CSC_T.Api.Controllers
 
             var result = await _userManager.CreateAsync(userIdentity, model.Password);
 
-            if (!result.Succeeded) return BadRequest();
-                    //new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+            if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            await _appDbContext.Users.AddAsync(new User { IdentityId = userIdentity.Id, Address = model.Address});
+            await _appDbContext.Users.AddAsync(new User { IdentityId = userIdentity.Id, Address = model.Address });
             await _appDbContext.SaveChangesAsync();
 
             return new OkObjectResult("Account created");
