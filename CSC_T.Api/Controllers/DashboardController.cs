@@ -18,7 +18,7 @@ namespace CSC_T.Api.Controllers
         private readonly ClaimsPrincipal _caller;
         private readonly CSCDbContext _appDbContext;
 
-        public DashboardController(UserManager<BaseUser> userManager, CSCDbContext appDbContext, IHttpContextAccessor httpContextAccessor)
+        public DashboardController(UserManager<User> userManager, CSCDbContext appDbContext, IHttpContextAccessor httpContextAccessor)
         {
             _caller = httpContextAccessor.HttpContext.User;
             _appDbContext = appDbContext;
@@ -29,15 +29,15 @@ namespace CSC_T.Api.Controllers
         public async Task<IActionResult> Home()
         {
             var userId = _caller.Claims.Single(c => c.Type == "id");
-            var user = await _appDbContext.Users.Include(c => c.Identity).SingleAsync(c => c.Identity.Id == userId.Value);
+            var user = await _appDbContext.Users.SingleAsync(c => c.Id == userId.Value);
 
             return new OkObjectResult(new
             {
                 Message = "This is secure API and user data!",
-                user.Identity.FirstName,
-                user.Identity.LastName,
-                user.Identity.PictureUrl,
-                user.Identity.FacebookId,
+                user.FirstName,
+                user.LastName,
+                user.PictureUrl,
+                user.FacebookId,
                 user.Address
             });
         }

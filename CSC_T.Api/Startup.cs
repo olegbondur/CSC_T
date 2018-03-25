@@ -22,7 +22,7 @@ namespace CSC_T.Api
     public class Startup
     {
 
-        private const string SecretKey = "super_secret_key!!8855"; 
+        private const string SecretKey = "super_secret_key!!8855";
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
         public Startup(IConfiguration configuration)
@@ -83,7 +83,7 @@ namespace CSC_T.Api
                 options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
             });
 
-            var builder = services.AddIdentityCore<BaseUser>(o =>
+            var builder = services.AddIdentityCore<User>(o =>
             {
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
@@ -99,7 +99,7 @@ namespace CSC_T.Api
             services.AddSwaggerGen(swagger =>
             {
                 swagger.SwaggerDoc("v1", new Info { Title = "CSC Web API", Version = "v1", Description = "ASP.NET Core Web API" });
-               
+
                 swagger.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SwaggerCSC.xml"));
 
                 swagger.AddSecurityDefinition("Bearer", new ApiKeyScheme
@@ -115,14 +115,6 @@ namespace CSC_T.Api
                 });
             });
 
-           /* var config = new AutoMapper.MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new AutoMapperProfileConfiguration());
-            });
-            var mapper = config.CreateMapper();
-            services.AddSingleton(mapper);*/
-
-            //services.AddAutoMapper(x => x.AddProfile(new AutoMapperProfileConfiguration()));
             services.AddAutoMapper();
         }
 

@@ -13,10 +13,10 @@ namespace CSC_T.Api.Controllers
     public class AccountsController : Controller
     {
         private readonly CSCDbContext _appDbContext;
-        private readonly UserManager<BaseUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public AccountsController(UserManager<BaseUser> userManager, IMapper mapper, CSCDbContext appDbContext)
+        public AccountsController(UserManager<User> userManager, IMapper mapper, CSCDbContext appDbContext)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -31,13 +31,12 @@ namespace CSC_T.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userIdentity = _mapper.Map<BaseUser>(model);
+            var userIdentity = _mapper.Map<User>(model);
 
             var result = await _userManager.CreateAsync(userIdentity, model.Password);
 
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            await _appDbContext.Users.AddAsync(new User { IdentityId = userIdentity.Id, Address = model.Address });
             await _appDbContext.SaveChangesAsync();
 
             return new OkObjectResult("Account created");

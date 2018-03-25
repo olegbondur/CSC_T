@@ -16,13 +16,13 @@ namespace CSC_T.Api.Controllers
     public class ExternalAuthController : Controller
     {
         private readonly CSCDbContext _appDbContext;
-        private readonly UserManager<BaseUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly FacebookAuthSettings _fbAuthSettings;
         private readonly IJwtFactory _jwtFactory;
         private readonly JwtIssuerOptions _jwtOptions;
         private static readonly HttpClient Client = new HttpClient();
 
-        public ExternalAuthController(IOptions<FacebookAuthSettings> fbAuthSettingsAccessor, UserManager<BaseUser> userManager, CSCDbContext appDbContext, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
+        public ExternalAuthController(IOptions<FacebookAuthSettings> fbAuthSettingsAccessor, UserManager<User> userManager, CSCDbContext appDbContext, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
         {
             _fbAuthSettings = fbAuthSettingsAccessor.Value;
             _userManager = userManager;
@@ -57,7 +57,7 @@ namespace CSC_T.Api.Controllers
 
             if (user == null)
             {
-                var baseUser = new BaseUser
+                var baseUser = new User
                 {
                     FirstName = userInfo.FirstName,
                     LastName = userInfo.LastName,
@@ -71,7 +71,8 @@ namespace CSC_T.Api.Controllers
 
                 if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-                await _appDbContext.Users.AddAsync(new User { IdentityId = baseUser.Id, Address = "" });//, Locale = userInfo.Locale, Gender = userInfo.Gender });
+                //await _appDbContext.UsersEx.AddAsync(new UserEx { IdentityId = baseUser.Id, Address = "" });//, Locale = userInfo.Locale, Gender = userInfo.Gender });
+                await _appDbContext.Users.AddAsync(new User());//, Locale = userInfo.Locale, Gender = userInfo.Gender });
                 await _appDbContext.SaveChangesAsync();
             }
 
