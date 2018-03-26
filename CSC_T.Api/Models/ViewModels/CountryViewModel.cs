@@ -1,7 +1,7 @@
 ﻿
-namespace CSC_T.Api.Models.DTO
+namespace CSC_T.Api.Models.ViewModel
 {
-    public class CountryDto
+    public class CountryViewModel
     {
         public string Name { get; set; }
         public string Code { get; set; }

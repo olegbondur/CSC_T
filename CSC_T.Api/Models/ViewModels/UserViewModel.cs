@@ -1,7 +1,7 @@
 ﻿
-namespace CSC_T.Api.Models.DTO
+namespace CSC_T.Api.Models.ViewModel
 {
-    public class UserDto
+    public class UserViewModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

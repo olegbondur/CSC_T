@@ -12,13 +12,14 @@ namespace CSC_T.BusinessLayer
             Database.EnsureCreated();
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> UserOwners { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Business> Businesses { get; set; }
-        public DbSet<Family> Families { get; set; }
+        public DbSet<Department> Families { get; set; }
         public DbSet<Offering> Offerings { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<CountryBusiness> CountryBusiness { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

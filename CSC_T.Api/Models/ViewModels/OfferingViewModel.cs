@@ -1,7 +1,7 @@
 ﻿
-namespace CSC_T.Api.Models.DTO
+namespace CSC_T.Api.Models.ViewModel
 {
-    public class OfferingDto
+    public class OfferingViewModel
     {
         public string Name { get; set; }
         public int FamilyId { get; set; }

@@ -15,6 +15,6 @@ namespace CSC_T.BusinessLayer.Entities
             CountryBusiness = new Collection<CountryBusiness>();
         }
 
-        public ICollection<Family> Families { get; set; }
+        public ICollection<Department> Families { get; set; }
     }
 }
