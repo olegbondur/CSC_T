@@ -1,5 +1,6 @@
 ﻿using CSC_T.BusinessLayer.DAL.Repositories;
 using CSC_T.BusinessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -10,22 +11,24 @@ namespace CSC_T.BusinessLayer.DAL
        
         private readonly CSCDbContext _dataContext;
 
-        private UserRepository userRepository;
-
         public UnitOfWork(CSCDbContext dataContext)
         {
             _dataContext = dataContext;
         }
 
 
-        public IRepository<User> UserRepository
+
+        public IRepository<Organization> OrganizationRepository
         {
-           get { return new UserRepository(_dataContext); }
+            get { return new OrganizationRepository(_dataContext); }
         }
-        public IRepository<Organization> OrganizationRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<Country> CountryRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public IRepository<Country> CountryRepository
+        {
+            get { return new CountryRepository(_dataContext); }
+        }
         public IRepository<Business> BusinessRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IRepository<Family> FamilyRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IRepository<Department> FamilyRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Offering> OfferingRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<Department> DepartmentRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IRepository<CountryBusiness> CountryBusinessRepository { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

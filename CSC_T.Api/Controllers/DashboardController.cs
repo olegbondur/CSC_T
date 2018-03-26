@@ -29,7 +29,7 @@ namespace CSC_T.Api.Controllers
         public async Task<IActionResult> Home()
         {
             var userId = _caller.Claims.Single(c => c.Type == "id");
-            var user = await _appDbContext.Users.SingleAsync(c => c.Id == userId.Value);
+            var user = await _appDbContext.UserOwners.SingleAsync(c => c.Id == userId.Value);
 
             return new OkObjectResult(new
             {

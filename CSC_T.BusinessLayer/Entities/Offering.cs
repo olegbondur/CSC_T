@@ -9,7 +9,7 @@ namespace CSC_T.BusinessLayer.Entities
         public string Name { get; set; }
 
         public int FamilyId { get; set; }
-        public Family Family { get; set; }
+        public Department Family { get; set; }
         public ICollection<Department> Departments { get; set; }
     }
 }

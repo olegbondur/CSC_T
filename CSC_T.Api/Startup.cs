@@ -16,6 +16,9 @@ using System.Text;
 using CSC_T.Api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using CSC_T.Api.Helpers;
+using CSC_T.Api.Services.Interfaces;
+using CSC_T.Api.Services;
+using CSC_T.BusinessLayer.DAL;
 
 namespace CSC_T.Api
 {
@@ -39,6 +42,18 @@ namespace CSC_T.Api
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
             b => b.MigrationsAssembly("CSC_T.Api")
             ));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigin", build => build
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
+            });
+
+            services.AddScoped<IOrganizationService, OrganizationService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
 
@@ -121,10 +136,14 @@ namespace CSC_T.Api
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowAllOrigin");
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -132,7 +151,6 @@ namespace CSC_T.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "CSC Web API");
             });
 
-            app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();

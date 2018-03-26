@@ -1,7 +1,7 @@
 ﻿
-namespace CSC_T.Api.Models.DTO
+namespace CSC_T.Api.Models.ViewModel
 {
-    public class BusinessDto
+    public class BusinessViewModel
     {
         public string Name { get; set; }
         public int CountryId { get; set; }

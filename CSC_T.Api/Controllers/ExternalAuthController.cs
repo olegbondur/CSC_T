@@ -72,7 +72,7 @@ namespace CSC_T.Api.Controllers
                 if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
                 //await _appDbContext.UsersEx.AddAsync(new UserEx { IdentityId = baseUser.Id, Address = "" });//, Locale = userInfo.Locale, Gender = userInfo.Gender });
-                await _appDbContext.Users.AddAsync(new User());//, Locale = userInfo.Locale, Gender = userInfo.Gender });
+                await _appDbContext.UserOwners.AddAsync(new User());//, Locale = userInfo.Locale, Gender = userInfo.Gender });
                 await _appDbContext.SaveChangesAsync();
             }
 
